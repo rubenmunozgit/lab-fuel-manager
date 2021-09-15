@@ -7,7 +7,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var commBrowserConfig = {
-  entry: './src/universal/index.js',
+  entry: {
+    homepage: './src/universal/HomepageRoot.js', 
+    dashboard: './src/universal/DashRoot.js'
+  },
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'build', 'static'),
@@ -54,13 +57,29 @@ var commBrowserConfig = {
       patterns: [
         {
           from: path.join(__dirname, 'src', 'server', 'views'),
+          globOptions: {
+            ignore: ["**/layouts/**"],
+          },
           to: path.join(__dirname, 'build', 'views'),
         },
       ],
     }),
     new HtmlWebpackPlugin({
-      filename: path.resolve(__dirname, 'build', 'views', 'layouts', 'main.hbs'),
-      template: path.resolve(__dirname, 'src', 'server', 'views', 'layouts', 'main.hbs'),
+      filename: path.resolve(__dirname, 'build', 'views', 'layouts', 'homepage.hbs'),
+      template: path.resolve(__dirname, 'src', 'server', 'views', 'layouts', 'homepage.hbs'),
+      excludeChunks: ['dashboard'],
+      // favicon: path.resolve(__dirname, 'src', 'favicons', 'favicon.ico'),
+      meta: {
+        viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
+        despription:
+          'Firebase Fuel Manager',
+        robots: 'index,follow',
+      },
+    }),
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, 'build', 'views', 'layouts', 'dashboard.hbs'),
+      template: path.resolve(__dirname, 'src', 'server', 'views', 'layouts', 'dashboard.hbs'),
+      excludeChunks: ['homepage'],
       // favicon: path.resolve(__dirname, 'src', 'favicons', 'favicon.ico'),
       meta: {
         viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',

@@ -1,4 +1,4 @@
 export const initialState = {
   render: 'homepage',
-  isAuth: false
+  isSSRAuth: false
 }

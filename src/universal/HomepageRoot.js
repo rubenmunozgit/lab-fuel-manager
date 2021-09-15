@@ -1,9 +1,9 @@
-import React  from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Homepage from './Pages/Homepage';
 const initialState = window.__INITIAL_STATE__;
 
 ReactDOM.hydrate(
-  <App initialState={initialState}/>, 
+  <Homepage initialState={initialState} />,
   document.getElementById('root')
 );

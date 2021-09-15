@@ -15,7 +15,7 @@ const ModalComponent = ({ show, hide }) => {
   const [input, setInput] = useState({});
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { emailPassSignIn } = useAuth();
+  const { isAuth, emailPassSignIn, token } = useAuth();
 
   const GooglSign = () => {};
   const handleEmailPassSignIn = async () => {
@@ -95,7 +95,7 @@ const NavBar = () => {
   const [showModal, setShowModal] = useState(false);
   const showLoginModal = () => setShowModal(true);
   const hideLoginModal = () => setShowModal(false);
-  const { isAuth, logOut } = useAuth();
+  const { isAuth, logOut, token } = useAuth();
 
   const handleLogOut = () => {
     logOut();
