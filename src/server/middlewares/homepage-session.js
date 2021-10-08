@@ -1,9 +1,14 @@
-import {admin} from '../../firebase-server';
+import { admin } from '../../firebase-server';
 
 const homepageSession = async (req, res, next) => {
-  const {token} = req.cookies;
-  if(!token) {
+  const { token, reAuth } = req.cookies;
+
+  if (!token || reAuth) {
     console.log('do not have token -> go homepage');
+    if (reAuth) {
+      res.clearCookie('reAuth');
+      req.reAuth = true;
+    }
     return next();
   }
 
@@ -17,8 +22,8 @@ const homepageSession = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     res.clearCookie('token');
-		return res.redirect('/');
+    return res.redirect('/');
   }
-}
+};
 
 export default homepageSession;

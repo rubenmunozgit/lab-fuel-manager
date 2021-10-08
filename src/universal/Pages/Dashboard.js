@@ -1,12 +1,14 @@
-import  React from 'react';
-import NavBar from '../components/Header/Navbar'
+import React from 'react';
+import { AuthProvider } from '../contexts/authContext';
+import DashContent from '../components/DashContent/DashContent';
 
-const Dashboard = () => {
+const Dashboard = ({ initialState }) => {
+  const { isSSRAuth } = initialState;
   return (
-    <>
-      <NavBar />
-      <h1>Dashboard</h1>
-    </>);
+    <AuthProvider isSSRAuth={isSSRAuth}>
+      <DashContent />
+    </AuthProvider>
+  );
 };
 
-export default Dashboard
+export default Dashboard;

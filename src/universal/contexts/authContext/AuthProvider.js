@@ -1,36 +1,50 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import AuthContext from './AuthContext';
-import {authApp} from '../../../firebase-client';
+import { authApp } from '../../../firebase-client';
 
-const isAuthenticated = (user) => {
-  return user ? true : false
-}
+const AuthProvider = ({ children, isSSRAuth, ssrReAuth }) => {
+  const [state, setState] = useState({
+    isAuth: isSSRAuth,
+    reAuth: ssrReAuth,
+    token: '',
+  });
 
-const AuthProvider = ({children, isSSRAuth}) => {
-  const [user, setUser] = useState(isSSRAuth);
-
-  authApp.onAuthStateChanged(authApp.auth, (user) => setUser(user));
+  useEffect(() => {
+    const unsubscribe = authApp.onAuthStateChanged(authApp.auth, (user) => {
+      if (user) {
+        setState({
+          isAuth: true,
+          reAuth: false,
+          token: user.accessToken,
+        });
+      } else {
+        setState({
+          isAuth: false,
+          reAuth: false,
+          token: '',
+        });
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
   const emailPassSignIn = (email, password) => {
     return authApp.signInWithEmailAndPassword(authApp.auth, email, password);
-  }
+  };
 
   const logOut = () => {
     return authApp.signOut(authApp.auth);
   };
 
   const context = {
-    token: isAuthenticated(user) ? user.accessToken : false,
-    isAuth: isAuthenticated(user),
+    ...state,
     emailPassSignIn,
     logOut,
-    google: ''
-  }
+    google: '',
+  };
   return (
-    <AuthContext.Provider value={context}>
-      {children}
-    </AuthContext.Provider>
-  )
+    <AuthContext.Provider value={context}>{children}</AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;
