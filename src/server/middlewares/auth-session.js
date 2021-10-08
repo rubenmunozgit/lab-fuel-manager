@@ -1,9 +1,9 @@
-import {admin} from '../../firebase-server';
+import { admin } from '../../firebase-server';
 
 const authSession = async (req, res, next) => {
-  const {token} = req.cookies;
+  const { token } = req.cookies;
 
-  if(!token) {
+  if (!token) {
     console.log('no cookie with token -> not allow');
     return res.redirect('/');
   }
@@ -12,7 +12,8 @@ const authSession = async (req, res, next) => {
   try {
     const decodeValue = await admin.auth().verifyIdToken(token);
 
-    if (decodeValue) { // token valid -> can continue
+    if (decodeValue) {
+      // token valid -> can continue
       req.user = decodeValue;
       req.isAuth = true;
       return next();
@@ -20,8 +21,9 @@ const authSession = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     res.clearCookie('token');
-		return res.redirect('/');
+    res.cookie('reAuth', true);
+    return res.redirect('/');
   }
-}
+};
 
 export default authSession;

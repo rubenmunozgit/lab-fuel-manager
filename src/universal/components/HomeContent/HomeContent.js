@@ -2,6 +2,7 @@ import React from 'react';
 import Cookies from 'js-cookie';
 import { useAuth } from '../../contexts/authContext';
 import NavBar from '../Header/Navbar';
+import ReAuth from '../ReAuth/ReAuth';
 import fuelImage from '../../../../assets/fuel-mgm-ilus.svg';
 
 const Content = () => {
@@ -35,14 +36,16 @@ const Content = () => {
 };
 
 const HomeContent = () => {
-  const { isAuth, token } = useAuth();
+  const { isAuth, reAuth, token } = useAuth();
 
-  if(isAuth && token){
+  if (isAuth && !reAuth && token) {
     Cookies.set('token', token);
     window.location.assign('/dashboard');
   }
 
-  return (
+  return reAuth ? (
+    <ReAuth />
+  ) : (
     <>
       <NavBar />
       <Content />

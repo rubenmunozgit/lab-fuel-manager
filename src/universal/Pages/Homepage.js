@@ -3,10 +3,10 @@ import { AuthProvider } from '../contexts/authContext';
 import HomeContent from '../components/HomeContent/HomeContent';
 
 const Homepage = ({ initialState }) => {
-  const { isSSRAuth } = initialState;
+  const { isSSRAuth, ssrReAuth } = initialState;
 
   return (
-    <AuthProvider isSSRAuth={isSSRAuth}>
+    <AuthProvider isSSRAuth={isSSRAuth} ssrReAuth={ssrReAuth}>
       <HomeContent />
     </AuthProvider>
   );

@@ -1,15 +1,12 @@
 import React from 'react';
 import { AuthProvider } from '../contexts/authContext';
-import NavBar from '../components/Header/Navbar';
+import DashContent from '../components/DashContent/DashContent';
 
 const Dashboard = ({ initialState }) => {
   const { isSSRAuth } = initialState;
   return (
     <AuthProvider isSSRAuth={isSSRAuth}>
-      <>
-        <NavBar />
-        <h1>Dashboard</h1>
-      </>
+      <DashContent />
     </AuthProvider>
   );
 };

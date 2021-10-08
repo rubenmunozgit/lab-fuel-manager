@@ -1,49 +1,50 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import AuthContext from './AuthContext';
-import {authApp} from '../../../firebase-client';
+import { authApp } from '../../../firebase-client';
 
-const isAuthenticated = (user) => {
-  return user ? true : false
-}
-
-const AuthProvider = ({children, isSSRAuth}) => {
-  const [isAuth, setIsAuth] = useState(isSSRAuth);
-  const [token, setToken] = useState('');
+const AuthProvider = ({ children, isSSRAuth, ssrReAuth }) => {
+  const [state, setState] = useState({
+    isAuth: isSSRAuth,
+    reAuth: ssrReAuth,
+    token: '',
+  });
 
   useEffect(() => {
     const unsubscribe = authApp.onAuthStateChanged(authApp.auth, (user) => {
       if (user) {
-        setIsAuth(true);
-        setToken(user.accessToken);
-      }
-      else {
-        setIsAuth(false);
-        setToken('');
+        setState({
+          isAuth: true,
+          reAuth: false,
+          token: user.accessToken,
+        });
+      } else {
+        setState({
+          isAuth: false,
+          reAuth: false,
+          token: '',
+        });
       }
     });
     return () => unsubscribe();
-  },[]);
+  }, []);
 
   const emailPassSignIn = (email, password) => {
     return authApp.signInWithEmailAndPassword(authApp.auth, email, password);
-  }
+  };
 
   const logOut = () => {
     return authApp.signOut(authApp.auth);
   };
 
   const context = {
-    token,
-    isAuth,
+    ...state,
     emailPassSignIn,
     logOut,
-    google: ''
-  }
+    google: '',
+  };
   return (
-    <AuthContext.Provider value={context}>
-      {children}
-    </AuthContext.Provider>
-  )
+    <AuthContext.Provider value={context}>{children}</AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;
