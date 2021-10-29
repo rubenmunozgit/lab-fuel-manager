@@ -10,3 +10,6 @@ build
 # OSX
 .DS_Store
 .vscode/settings.json
+
+# Others
+.replit

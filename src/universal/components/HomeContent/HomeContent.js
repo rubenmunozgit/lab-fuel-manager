@@ -41,12 +41,12 @@ const HomeContent = () => {
   if (isAuth && !reAuth && token) {
     Cookies.set('token', token);
     window.location.assign('/dashboard');
-    return;
+    return (<NavBar />);
   }
 
-  return reAuth ? (
-    <ReAuth />
-  ) : (
+  if (reAuth) return (<ReAuth />);
+
+  return (
     <>
       <NavBar />
       <Content />
