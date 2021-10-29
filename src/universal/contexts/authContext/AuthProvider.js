@@ -43,7 +43,9 @@ const AuthProvider = ({ children, isSSRAuth, ssrReAuth }) => {
     google: '',
   };
   return (
-    <AuthContext.Provider value={context}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={context}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

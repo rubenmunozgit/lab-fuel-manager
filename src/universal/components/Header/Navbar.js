@@ -11,11 +11,11 @@ import {
 } from 'react-bootstrap';
 import { useAuth } from '../../contexts/authContext';
 
-const ModalComponent = ({ show, hide }) => {
+const LoginModal = ({ show, hide }) => {
   const [input, setInput] = useState({});
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { isAuth, emailPassSignIn, token } = useAuth();
+  const { emailPassSignIn } = useAuth();
 
   const GooglSign = () => {};
   const handleEmailPassSignIn = async () => {
@@ -24,8 +24,9 @@ const ModalComponent = ({ show, hide }) => {
     setLoading(true);
     try {
       await emailPassSignIn(email, password);
-      setLoading(false);
+      hide()
     } catch (error) {
+      setLoading(false);
       setError(error.message);
     }
   };
@@ -95,7 +96,7 @@ const NavBar = () => {
   const [showModal, setShowModal] = useState(false);
   const showLoginModal = () => setShowModal(true);
   const hideLoginModal = () => setShowModal(false);
-  const { isAuth, logOut, token } = useAuth();
+  const { isAuth, logOut } = useAuth();
 
   const handleLogOut = () => {
     logOut();
@@ -147,7 +148,7 @@ const NavBar = () => {
           </div>
         </Container>
       </Navbar>
-      <ModalComponent show={showModal} hide={hideLoginModal} />
+      <LoginModal show={showModal} hide={hideLoginModal} />
     </>
   );
 };
