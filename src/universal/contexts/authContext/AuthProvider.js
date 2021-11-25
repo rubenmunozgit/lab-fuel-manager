@@ -28,6 +28,10 @@ const AuthProvider = ({ children, isSSRAuth, ssrReAuth }) => {
     return () => unsubscribe();
   }, []);
 
+  const emailPassSignUp = (email, password) => {
+    return authApp.createUserWithEmailAndPassword(authApp.auth, email, password);
+  }
+
   const emailPassSignIn = (email, password) => {
     return authApp.signInWithEmailAndPassword(authApp.auth, email, password);
   };
@@ -39,6 +43,7 @@ const AuthProvider = ({ children, isSSRAuth, ssrReAuth }) => {
   const context = {
     ...state,
     emailPassSignIn,
+    emailPassSignUp,
     logOut,
     google: '',
   };
