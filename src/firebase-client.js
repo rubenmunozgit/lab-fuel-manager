@@ -1,5 +1,6 @@
 import {initializeApp} from 'firebase/app';
-import {getAuth, 
+import {getAuth,
+  createUserWithEmailAndPassword,
   onAuthStateChanged, 
   signInWithEmailAndPassword, 
   signOut} from 'firebase/auth';
@@ -19,6 +20,7 @@ const auth = getAuth();
 
 export const authApp = {
   auth, 
+  createUserWithEmailAndPassword,
   onAuthStateChanged, 
   signInWithEmailAndPassword,
   signOut

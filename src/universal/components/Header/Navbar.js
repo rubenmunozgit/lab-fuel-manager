@@ -17,14 +17,13 @@ const LoginModal = ({ show, hide }) => {
   const [loading, setLoading] = useState(false);
   const { emailPassSignIn } = useAuth();
 
-  const GooglSign = () => {};
+  const GooglSign = () => { };
   const handleEmailPassSignIn = async () => {
     const { email, password } = input;
     setError('');
     setLoading(true);
     try {
       await emailPassSignIn(email, password);
-      hide()
     } catch (error) {
       setLoading(false);
       setError(error.message);
@@ -54,9 +53,6 @@ const LoginModal = ({ show, hide }) => {
               name='email'
               onChange={handleInputChange}
             />
-            <Form.Text className='text-muted'>
-              We'll never share your email with anyone else.
-            </Form.Text>
           </Form.Group>
 
           <Form.Group className='mb-3' controlId='formBasicPassword'>
@@ -92,10 +88,104 @@ const LoginModal = ({ show, hide }) => {
   );
 };
 
+const SignupModal = ({ show, hide }) => {
+  const [input, setInput] = useState({});
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { emailPassSignUp } = useAuth();
+
+  const handleInputChange = (evt) => {
+    const { name, value } = evt.currentTarget;
+    setInput((input) => ({
+      ...input,
+      [name]: value,
+    }));
+  };
+
+  const handleEmailPassSignUp = async () => {
+    const { email, password, confPassword } = input;
+    setError('');
+    if (password !== confPassword) {
+      setError('Password must match');
+      return;
+    }
+    setLoading(true);
+    try {
+      await emailPassSignUp(email, password);
+    } catch (error) {
+      setLoading(false);
+      setError(error.message);
+    }
+  };
+
+  return (
+    <Modal show={show} onHide={hide}>
+      <Modal.Header>
+        <Modal.Title>Sign Up to Fuel Manager</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form>
+          <Form.Group className='mb-3' controlId='formEmailSignUp'>
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type='email'
+              placeholder='Enter email'
+              name='email'
+              onChange={handleInputChange}
+            />
+            <Form.Text className='text-muted'>
+              We'll never share your email with anyone else.
+            </Form.Text>
+          </Form.Group>
+
+          <Form.Group className='mb-3' controlId='formPasswordSignUp'>
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type='password'
+              placeholder='Password'
+              name='password'
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+
+          <Form.Group className='mb-3' controlId='formConfirmPasswordSignUp'>
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              type='password'
+              placeholder='Repeat Password'
+              name='confPassword'
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+
+          {loading && (
+            <div className='d-flex justify-content-center'>
+              <Spinner className='mb-3' animation='grow' variant='success' />
+            </div>
+          )}
+          {error && <Alert variant='warning'>{error}</Alert>}
+        </Form>
+        <Button
+          variant='primary'
+          className='w-100'
+          onClick={handleEmailPassSignUp}
+        >
+          Sign Up
+        </Button>
+      </Modal.Body>
+    </Modal>
+  );
+
+
+};
+
 const NavBar = () => {
-  const [showModal, setShowModal] = useState(false);
-  const showLoginModal = () => setShowModal(true);
-  const hideLoginModal = () => setShowModal(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const showLogin = () => setShowLoginModal(true);
+  const hideLogin = () => setShowLoginModal(false);
+  const showSignup = () => setShowSignupModal(true);
+  const hideSignup = () => setShowSignupModal(false);
   const { isAuth, logOut } = useAuth();
 
   const handleLogOut = () => {
@@ -118,11 +208,15 @@ const NavBar = () => {
                 <button
                   type='button'
                   className='btn bg-white me-2'
-                  onClick={showLoginModal}
+                  onClick={showLogin}
                 >
                   Log-In
                 </button>
-                <button type='button' className='btn btn-primary'>
+                <button 
+                  type='button' 
+                  className='btn btn-primary' 
+                  onClick={showSignup}
+                  >
                   Sign-up
                 </button>
               </>
@@ -148,7 +242,8 @@ const NavBar = () => {
           </div>
         </Container>
       </Navbar>
-      <LoginModal show={showModal} hide={hideLoginModal} />
+      <LoginModal show={showLoginModal} hide={hideLogin} />
+      <SignupModal show={showSignupModal} hide={hideSignup} />
     </>
   );
 };
