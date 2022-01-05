@@ -1,11 +1,5 @@
-import React, {useState} from 'react';
-import {
-    Modal,
-    Button,
-    Form,
-    Alert,
-    Spinner,
-  } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Modal, Button, Form, Alert, Spinner } from 'react-bootstrap';
 import { useAuth } from '../../contexts/authContext';
 
 const LoginModal = ({ show, hide }) => {

@@ -43,7 +43,7 @@ const HomeContent = () => {
     window.location.assign('/dashboard');
   }
 
-  if (reAuth) return (<ReAuth />);
+  if (reAuth) return <ReAuth />;
 
   return (
     <>

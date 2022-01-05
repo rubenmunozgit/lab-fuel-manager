@@ -29,11 +29,19 @@ const AuthProvider = ({ children, isSSRAuth, ssrReAuth }) => {
   }, []);
 
   const emailPassSignUp = (email, password) => {
-    return authApp.createUserWithEmailAndPassword(authApp.auth, email, password);
-  }
+    return authApp.createUserWithEmailAndPassword(
+      authApp.auth,
+      email,
+      password
+    );
+  };
 
-  const emailPassSignIn = (email, password) => {
-    return authApp.signInWithEmailAndPassword(authApp.auth, email, password);
+  const emailPassSignIn = async (email, password) => {
+    return await authApp.signInWithEmailAndPassword(
+      authApp.auth,
+      email,
+      password
+    );
   };
 
   const logOut = () => {
@@ -48,9 +56,7 @@ const AuthProvider = ({ children, isSSRAuth, ssrReAuth }) => {
     google: '',
   };
   return (
-    <AuthContext.Provider value={context}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={context}>{children}</AuthContext.Provider>
   );
 };
 
