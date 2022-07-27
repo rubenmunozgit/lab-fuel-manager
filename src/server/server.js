@@ -6,7 +6,7 @@ import routes from './routes';
 
 const app = express();
 // express setup
-app.engine('.hbs', exphbs({ extname: '.hbs' }));
+app.engine('.hbs', exphbs({extname: '.hbs'}));
 app.set('view engine', '.hbs');
 app.set('views', path.join(process.cwd(), 'build', 'views'));
 
@@ -19,5 +19,5 @@ app.use(routes);
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`Server is listening on port: ${port}`);
+    console.log(`Server is listening on port: ${port}`);
 });

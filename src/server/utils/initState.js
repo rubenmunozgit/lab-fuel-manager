@@ -1,3 +1,3 @@
 export const initialState = {
-  isSSRAuth: false
+    isSSRAuth: false
 }
