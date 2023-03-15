@@ -1,7 +1,7 @@
-import {admin} from '../../firebase-server';
+import { auth } from '../../firebase-server';
 
 const authSession = async (req, res, next) => {
-    const {token} = req.cookies;
+    const { token } = req.cookies;
 
     if (!token) {
         console.log('no cookie with token -> not allow');
@@ -10,7 +10,7 @@ const authSession = async (req, res, next) => {
 
     console.log('I have token');
     try {
-        const decodeValue = await admin.auth().verifyIdToken(token);
+        const decodeValue = await auth().verifyIdToken(token);
 
         if (decodeValue) {
             // token valid -> can continue
