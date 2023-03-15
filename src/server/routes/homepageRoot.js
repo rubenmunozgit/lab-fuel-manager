@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Homepage from '../../universal/Pages/Homepage';
-import {initialState} from '../utils/initState';
+import { initialState } from '../utils/initState';
 
 const homepageRoot = (req, res, next) => {
     const initState = {
@@ -11,7 +11,7 @@ const homepageRoot = (req, res, next) => {
 
     try {
         const html = ReactDOMServer.renderToString(
-            <Homepage initialState={initState}/>
+            <Homepage initialState={initState} />
         );
         res.render('react', {
             html,

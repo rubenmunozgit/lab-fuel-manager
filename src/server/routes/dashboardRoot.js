@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Dashboard from '../../universal/Pages/Dashboard';
-import {initialState} from '../utils/initState';
+import { initialState } from '../utils/initState';
 
 const dashboardRoot = (req, res, next) => {
     const initState = {
@@ -11,7 +11,7 @@ const dashboardRoot = (req, res, next) => {
 
     try {
         const html = ReactDOMServer.renderToString(
-            <Dashboard initialState={initState}/>
+            <Dashboard initialState={initState} />
         );
         res.render('react', {
             html,

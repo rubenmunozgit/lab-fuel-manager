@@ -6,7 +6,7 @@ import routes from './routes';
 
 const app = express();
 // express setup
-app.engine('.hbs', exphbs({extname: '.hbs'}));
+app.engine('.hbs', exphbs({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
 app.set('views', path.join(process.cwd(), 'build', 'views'));
 
