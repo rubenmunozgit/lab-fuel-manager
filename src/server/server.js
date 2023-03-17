@@ -3,6 +3,7 @@ import exphbs from 'express-handlebars';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import routes from './routes';
+import logger from './utils/logger';
 
 const app = express();
 // express setup
@@ -19,5 +20,5 @@ app.use(routes);
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-    console.log(`Server is listening on port: ${port}`);
+    logger.info(`Server is listening on port: ${port}`);
 });

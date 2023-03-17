@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Homepage from '../../universal/Pages/Homepage';
 import { initialState } from '../utils/initState';
+import logger from '../utils/logger';
 
 const homepageRoot = (req, res, next) => {
     const initState = {
@@ -19,7 +20,7 @@ const homepageRoot = (req, res, next) => {
             layout: 'homepage',
         });
     } catch (error) {
-        console.log(error);
+        logger.error(error);
         next(error);
     }
 };

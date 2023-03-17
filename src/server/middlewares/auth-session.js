@@ -1,14 +1,15 @@
 import { auth } from '../../firebase-server';
+import logger from '../utils/logger';
 
 const authSession = async (req, res, next) => {
     const { token } = req.cookies;
 
     if (!token) {
-        console.log('no cookie with token -> not allow');
+        logger.info('no cookie with token -> not allow');
         return res.redirect('/');
     }
 
-    console.log('I have token');
+    logger.info('I have token');
     try {
         const decodeValue = await auth().verifyIdToken(token);
 
@@ -19,7 +20,7 @@ const authSession = async (req, res, next) => {
             return next();
         }
     } catch (err) {
-        console.log(err);
+        logger.error(err);
         res.clearCookie('token');
         res.cookie('reAuth', true);
         return res.redirect('/');

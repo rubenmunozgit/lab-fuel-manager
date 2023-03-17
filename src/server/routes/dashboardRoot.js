@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Dashboard from '../../universal/Pages/Dashboard';
 import { initialState } from '../utils/initState';
+import logger from '../utils/logger';
 
 const dashboardRoot = (req, res, next) => {
     const initState = {
@@ -19,7 +20,7 @@ const dashboardRoot = (req, res, next) => {
             layout: 'dashboard',
         });
     } catch (error) {
-        console.log(error);
+        logger.error(error);
         next(error);
     }
 };

@@ -1,10 +1,11 @@
 import { auth } from '../../firebase-server';
+import logger from '../utils/logger';
 
 const homepageSession = async (req, res, next) => {
     const { token, reAuth } = req.cookies;
 
     if (!token || reAuth) {
-        console.log('do not have token -> go homepage');
+        logger.info('do not have token -> go homepage');
         if (reAuth) {
             res.clearCookie('reAuth');
             req.reAuth = true;
@@ -12,7 +13,7 @@ const homepageSession = async (req, res, next) => {
         return next();
     }
 
-    console.log('I have a cookie -> check if valid');
+    logger.info('I have a cookie -> check if valid');
     try {
         const decodeValue = await auth().verifyIdToken(token);
 
@@ -20,7 +21,7 @@ const homepageSession = async (req, res, next) => {
             return res.redirect('/dashboard'); // you are a valid user -> go to dashboard
         }
     } catch (err) {
-        console.log(err);
+        logger.error(err);
         res.clearCookie('token');
         return res.redirect('/');
     }
