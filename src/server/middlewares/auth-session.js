@@ -5,16 +5,17 @@ const authSession = async (req, res, next) => {
     const { token } = req.cookies;
 
     if (!token) {
-        logger.info('no cookie with token -> not allow');
+        logger.info('authSession - request has no cookie with token -> not allow: go homepage');
         return res.redirect('/');
     }
 
-    logger.info('I have token');
+    logger.info('authSession - There is a token, verify...');
     try {
         const decodeValue = await auth().verifyIdToken(token);
 
         if (decodeValue) {
             // token valid -> can continue
+            logger.info('authSession - token valid -> go dashboard');
             req.user = decodeValue;
             req.isAuth = true;
             return next();

@@ -5,20 +5,22 @@ const homepageSession = async (req, res, next) => {
     const { token, reAuth } = req.cookies;
 
     if (!token || reAuth) {
-        logger.info('do not have token -> go homepage');
+        logger.info('homepageSession - request has no cookie with token or reAuth is true -> redirecting to homepage');
         if (reAuth) {
+            logger.info('homepageSession - reAuth = true -> clearing reAuth cookie and setting req.reAuth to true');
             res.clearCookie('reAuth');
             req.reAuth = true;
         }
         return next();
     }
 
-    logger.info('I have a cookie -> check if valid');
+    logger.info('homepageSession - There is a token, verify...');
     try {
         const decodeValue = await auth().verifyIdToken(token);
 
         if (decodeValue) {
-            return res.redirect('/dashboard'); // you are a valid user -> go to dashboard
+            logger.info('homepageSession - token valid -> go dashboard');
+            return res.redirect('/dashboard');
         }
     } catch (err) {
         logger.error(err);
