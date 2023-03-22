@@ -1,6 +1,6 @@
 import React from 'react';
 import Cookies from 'js-cookie';
-import {useAuth} from '../../contexts/authContext';
+import { useAuth } from '../../contexts/authContext';
 import NavBar from '../Header/Navbar';
 import ReAuth from '../ReAuth/ReAuth';
 import fuelImage from '../../../../assets/fuel-mgm-ilus.svg';
@@ -36,19 +36,20 @@ const Content = () => {
 };
 
 const HomeContent = () => {
-    const {isAuth, reAuth, token} = useAuth();
+    const { isAuth, reAuth, token } = useAuth();
 
     if (isAuth && !reAuth && token) {
         Cookies.set('token', token);
-        window.location.assign('/dashboard');
+        window.location.href = '/dashboard';
+        return null;
     }
 
-    if (reAuth) return <ReAuth/>;
+    if (reAuth) return <ReAuth />;
 
     return (
         <>
-            <NavBar/>
-            <Content/>
+            <NavBar />
+            <Content />
         </>
     );
 };
