@@ -5,9 +5,14 @@ import { initialState } from '../utils/initState';
 import logger from '../utils/logger';
 
 const dashboardRoot = (req, res, next) => {
+    const { user } = req;
     const initState = {
         ...initialState,
         isSSRAuth: req.isAuth,
+        user: {
+            displayName: user?.name || user.email,
+            email: user.email
+        }
     };
 
     try {

@@ -5,11 +5,9 @@ import { useAuth } from '../../../contexts/authContext';
 const ProfileLink = () => {
     const { user } = useAuth();
 
-    const displayName = user?.displayName || user?.email;
-
     return (
         <Button className='me-2' variant='primary' href='/profile'>
-            {displayName}
+            {user.displayName}
         </Button >
     );
 }
