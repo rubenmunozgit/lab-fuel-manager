@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
-import LoginModal from '../Modals/Login';
-import SignupModal from '../Modals/Signup';
+import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import LoginModal from '../../Modals/Login';
+import SignupModal from '../../Modals/Signup';
 
 const LoginSignUp = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
@@ -12,14 +13,15 @@ const LoginSignUp = () => {
 
     return (
         <>
-            <button type='button' className='btn bg-white me-2' onClick={showLogin}>
+            <Button className='me-2' variant='light' onClick={showLogin}>
                 Log-In
-            </button>
-            <button type='button' className='btn btn-primary' onClick={showSignup}>
+            </Button>
+            <Button variant='primary' onClick={showSignup}>
                 Sign-up
-            </button>
-            <LoginModal show={showLoginModal} hide={hideLogin}/>
-            <SignupModal show={showSignupModal} hide={hideSignup}/>
+            </Button>
+
+            <LoginModal show={showLoginModal} hide={hideLogin} />
+            <SignupModal show={showSignupModal} hide={hideSignup} />
         </>
     );
 };

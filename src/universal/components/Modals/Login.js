@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
-import {Alert, Button, Form, Modal, Spinner} from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Alert, Button, Form, Modal, Spinner } from 'react-bootstrap';
 import google from '../../../../assets/google.svg';
-import {useAuth} from '../../contexts/authContext';
+import { useAuth } from '../../contexts/authContext';
 
-const LoginModal = ({show, hide}) => {
+const LoginModal = ({ show, hide }) => {
     const [input, setInput] = useState({});
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const {emailPassSignIn, google: {googleSignIn}} = useAuth();
+    const { emailPassSignIn, google: { googleSignIn } } = useAuth();
 
     const handleEmailPassSignIn = async () => {
-        const {email, password} = input;
+        const { email, password } = input;
         setError('');
         setLoading(true);
         try {
@@ -22,7 +22,7 @@ const LoginModal = ({show, hide}) => {
     };
 
     const handleInputChange = (evt) => {
-        const {name, value} = evt.currentTarget;
+        const { name, value } = evt.currentTarget;
         setInput((input) => ({
             ...input,
             [name]: value,
@@ -57,7 +57,7 @@ const LoginModal = ({show, hide}) => {
                     </Form.Group>
                     {loading && (
                         <div className='d-flex justify-content-center'>
-                            <Spinner className='mb-3' animation='grow' variant='success'/>
+                            <Spinner className='mb-3' animation='grow' variant='success' />
                         </div>
                     )}
                     {error && <Alert variant='warning'>{error}</Alert>}
@@ -71,14 +71,17 @@ const LoginModal = ({show, hide}) => {
                 </Button>
             </Modal.Body>
             <Modal.Footer>
-                <img
-                    src={google}
-                    alt='google sign in'
-                    onClick={googleSignIn}
-                    width='32'
-                    height='32'
-                    loading='lazy'
-                />
+                <p className="text-center">Sign In with</p>
+                <button className='btn'>
+                    <img
+                        src={google}
+                        alt='google sign in'
+                        onClick={googleSignIn}
+                        width='32'
+                        height='32'
+                        loading='lazy'
+                    />
+                </button>
             </Modal.Footer>
         </Modal>
     );
