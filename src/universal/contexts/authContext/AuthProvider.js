@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import AuthContext from './AuthContext';
 import { authApp } from '../../../firebase-client';
 
-const AuthProvider = ({ children, isSSRAuth, ssrReAuth }) => {
+const AuthProvider = ({ children, isSSRAuth, ssrReAuth, user }) => {
     const [state, setState] = useState({
         isAuth: isSSRAuth,
         reAuth: ssrReAuth,
         token: '',
+        user
     });
 
     useEffect(() => {
@@ -17,7 +18,7 @@ const AuthProvider = ({ children, isSSRAuth, ssrReAuth }) => {
                     reAuth: false,
                     token: user.accessToken,
                     user: {
-                        displayName: user.displayName,
+                        displayName: user?.displayName || user.email,
                         email: user.email
                     }
                 });
@@ -26,6 +27,7 @@ const AuthProvider = ({ children, isSSRAuth, ssrReAuth }) => {
                     isAuth: isSSRAuth,
                     reAuth: ssrReAuth,
                     token: '',
+                    user
                 });
             }
         });
