@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
-import {Alert, Button, Form, Modal, Spinner} from 'react-bootstrap';
-import {useAuth} from '../../contexts/authContext';
+import React, { useState } from 'react';
+import { Alert, Button, Form, Modal, Spinner } from 'react-bootstrap';
+import { useAuth } from '../../contexts/authContext';
 
-const SignupModal = ({show, hide}) => {
+const SignupModal = ({ show, hide }) => {
     const [input, setInput] = useState({});
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const {emailPassSignUp} = useAuth();
+    const { emailPassSignUp, updateProfile } = useAuth();
 
     const handleInputChange = (evt) => {
-        const {name, value} = evt.currentTarget;
+        const { name, value } = evt.currentTarget;
         setInput((input) => ({
             ...input,
             [name]: value,
@@ -17,7 +17,7 @@ const SignupModal = ({show, hide}) => {
     };
 
     const handleEmailPassSignUp = async () => {
-        const {email, password, confPassword} = input;
+        const { email, password, confPassword } = input;
         setError('');
         if (password !== confPassword) {
             setError('Password must match');
@@ -74,7 +74,7 @@ const SignupModal = ({show, hide}) => {
 
                     {loading && (
                         <div className='d-flex justify-content-center'>
-                            <Spinner className='mb-3' animation='grow' variant='success'/>
+                            <Spinner className='mb-3' animation='grow' variant='success' />
                         </div>
                     )}
                     {error && <Alert variant='warning'>{error}</Alert>}

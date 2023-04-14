@@ -21,6 +21,17 @@ const LoginModal = ({ show, hide }) => {
         }
     };
 
+    const handleGoogleSignIn = async () => {
+        setError('');
+        setLoading(true);
+        try {
+            await googleSignIn();
+        } catch (error) {
+            setLoading(false);
+            setError(error.message);
+        }
+    }
+
     const handleInputChange = (evt) => {
         const { name, value } = evt.currentTarget;
         setInput((input) => ({
@@ -71,12 +82,12 @@ const LoginModal = ({ show, hide }) => {
                 </Button>
             </Modal.Body>
             <Modal.Footer>
-                <p className="text-center">Sign In with</p>
+                <p className="text-center text-muted">Sign In with</p>
                 <button className='btn'>
                     <img
                         src={google}
                         alt='google sign in'
-                        onClick={googleSignIn}
+                        onClick={handleGoogleSignIn}
                         width='32'
                         height='32'
                         loading='lazy'
