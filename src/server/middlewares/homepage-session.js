@@ -1,4 +1,3 @@
-import { auth } from '../../firebase-server';
 import logger from '../utils/logger';
 
 const homepageSession = async (req, res, next) => {
@@ -14,19 +13,8 @@ const homepageSession = async (req, res, next) => {
         return next();
     }
 
-    logger.info('homepageSession - There is a token, verify...');
-    try {
-        const decodeValue = await auth().verifyIdToken(token);
-
-        if (decodeValue) {
-            logger.info('homepageSession - token valid -> go dashboard');
-            return res.redirect('/dashboard');
-        }
-    } catch (err) {
-        logger.error(err);
-        res.clearCookie('token');
-        return res.redirect('/');
-    }
+    logger.info('homepageSession - There is a token, redirecting to dashboard...');
+    return res.redirect('/dashboard');
 };
 
 export default homepageSession;

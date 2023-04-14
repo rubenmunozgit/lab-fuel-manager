@@ -4,7 +4,7 @@ import Dashboard from '../../universal/Pages/Dashboard';
 import { initialState } from '../utils/initState';
 import logger from '../utils/logger';
 
-const dashboardRoot = (req, res, next) => {
+const dashboardController = (req, res, next) => {
     const { user } = req;
     const initState = {
         ...initialState,
@@ -30,4 +30,4 @@ const dashboardRoot = (req, res, next) => {
     }
 };
 
-export default dashboardRoot;
+export default dashboardController;
