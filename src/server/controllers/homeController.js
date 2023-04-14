@@ -4,7 +4,7 @@ import Homepage from '../../universal/Pages/Homepage';
 import { initialState } from '../utils/initState';
 import logger from '../utils/logger';
 
-const homepageRoot = (req, res, next) => {
+const homeController = (req, res, next) => {
     const initState = {
         ...initialState,
         ssrReAuth: req.reAuth || false,
@@ -25,4 +25,4 @@ const homepageRoot = (req, res, next) => {
     }
 };
 
-export default homepageRoot;
+export default homeController;
